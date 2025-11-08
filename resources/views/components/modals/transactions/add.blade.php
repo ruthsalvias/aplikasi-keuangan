@@ -48,7 +48,7 @@
                                    class="form-control border-0 shadow-none bg-light"
                                    placeholder="Masukkan jumlah"
                                    min="0"
-                                   step="1000">
+                                   step="1">
                         </div>
                         @error('addAmount')
                             <div class="small text-danger mt-1">{{ $message }}</div>
