@@ -1,683 +1,717 @@
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
     
-    * { font-family: 'Inter', sans-serif !important; }
-    
-    @keyframes gradient-shift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    * { 
+        font-family: 'Poppins', sans-serif !important; 
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
     
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
+    @keyframes aurora {
+        0%, 100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.8; }
+        50% { transform: translateX(-50%) translateY(-30px) scale(1.1); opacity: 1; }
     }
     
-    @keyframes slide-up {
-        from { opacity: 0; transform: translateY(30px); }
+    @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+        50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+    }
+    
+    @keyframes float-up {
+        from { opacity: 0; transform: translateY(40px); }
         to { opacity: 1; transform: translateY(0); }
     }
     
-    @keyframes spin {
+    @keyframes rotate-slow {
+        from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
     }
     
-    .premium-card {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 24px;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
-        position: relative;
+    @keyframes shimmer {
+        0% { background-position: -1000px 0; }
+        100% { background-position: 1000px 0; }
     }
     
-    [data-bs-theme="dark"] .premium-card {
-        background: rgba(26, 29, 32, 0.8);
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+    }
+    
+    [data-bs-theme="dark"] body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    }
+    
+    .dashboard-wrapper {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border-radius: 32px;
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .hero-section {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(168, 85, 247, 0.9));
+        border-radius: 28px;
+        padding: 3rem 2rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+        top: -250px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: aurora 8s ease-in-out infinite;
+    }
+    
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.3;
+    }
+    
+    .avatar-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .avatar-circle::after {
+        content: '✓';
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        border: 3px solid white;
+    }
+    
+    .stat-card-modern {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(30px);
+        border-radius: 24px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        animation: float-up 0.6s ease-out;
+    }
+    
+    [data-bs-theme="dark"] .stat-card-modern {
+        background: rgba(30, 41, 59, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .premium-card::before {
+    .stat-card-modern::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        background-size: 200% 200%;
-        animation: gradient-shift 3s ease infinite;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #667eea);
+        background-size: 300% 300%;
+        border-radius: 24px;
+        z-index: -1;
         opacity: 0;
         transition: opacity 0.3s;
+        animation: shimmer 3s linear infinite;
     }
     
-    .premium-card:hover::before { opacity: 1; }
-    
-    .premium-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    .stat-card-modern:hover::before {
+        opacity: 1;
     }
     
-    .stat-icon-wrapper {
-        width: 64px;
-        height: 64px;
-        border-radius: 16px;
+    .stat-card-modern:hover {
+        transform: translateY(-12px) scale(1.03);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .icon-box {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        overflow: hidden;
+        margin-bottom: 1.5rem;
     }
     
-    .stat-icon-wrapper::before {
-        content: '';
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-        transform: rotate(45deg) translateY(-100%);
-        transition: transform 0.6s;
-    }
-    
-    .premium-card:hover .stat-icon-wrapper::before {
-        transform: rotate(45deg) translateY(100%);
-    }
-    
-    .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    .chart-card {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        border-radius: 24px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    [data-bs-theme="dark"] .chart-card {
-        background: rgba(26, 29, 32, 0.9);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .chart-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
-    }
-    
-    .welcome-banner {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        background-size: 200% 200%;
-        animation: gradient-shift 8s ease infinite;
-        border-radius: 24px;
+    .icon-box i {
+        font-size: 2.5rem;
+        color: white;
         position: relative;
-        overflow: hidden;
+        z-index: 2;
     }
     
-    .welcome-banner::after {
+    .icon-box::after {
         content: '';
         position: absolute;
-        top: -50%;
-        right: -20%;
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-        border-radius: 50%;
-        animation: float 6s ease-in-out infinite;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        border-radius: inherit;
+        filter: blur(20px);
+        opacity: 0.6;
+        z-index: 1;
     }
     
-    .metric-badge {
-        padding: 6px 14px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.5px;
+    .amount-display {
+        font-size: 2.2rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 1rem 0;
+        letter-spacing: -1px;
+    }
+    
+    .trend-badge {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-    }
-    
-    .action-btn {
-        padding: 12px 24px;
-        border-radius: 14px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.875rem;
         font-weight: 600;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: none;
-        position: relative;
-        overflow: hidden;
     }
     
-    .action-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    .chart-container-modern {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(30px);
+        border-radius: 28px;
+        padding: 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        animation: float-up 0.8s ease-out;
     }
     
-    .stats-number {
-        font-size: 2rem;
-        font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: -0.5px;
-    }
-    
-    .chart-toolbar {
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(10px);
-        border-radius: 16px;
-        padding: 12px 16px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-    
-    [data-bs-theme="dark"] .chart-toolbar {
-        background: rgba(26, 29, 32, 0.6);
+    [data-bs-theme="dark"] .chart-container-modern {
+        background: rgba(30, 41, 59, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    .period-btn {
-        padding: 8px 18px;
-        border-radius: 10px;
+    .action-button {
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-weight: 600;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.875rem;
+    }
+    
+    .action-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    
+    .action-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .action-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .quick-stats {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .quick-stat-item {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 12px 24px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .quick-stat-item i {
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .period-selector {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 6px;
+        display: inline-flex;
+        gap: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .period-selector button {
+        padding: 10px 24px;
+        border-radius: 16px;
         border: none;
         background: transparent;
+        color: inherit;
         font-weight: 600;
-        font-size: 0.875rem;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    
+    .period-selector button.active {
+        background: white;
+        color: #667eea;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    [data-bs-theme="dark"] .period-selector button.active {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    
+    .transaction-row {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem;
+        border-radius: 16px;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
         transition: all 0.3s;
     }
     
-    .period-btn.active {
-        background: white;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    [data-bs-theme="dark"] .transaction-row {
+        background: rgba(51, 65, 85, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    [data-bs-theme="dark"] .period-btn.active {
-        background: rgba(255,255,255,0.1);
+    .transaction-row:hover {
+        transform: translateX(8px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     }
     
-    .icon-btn {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        border: none;
+    .floating-action {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         display: flex;
         align-items: center;
         justify-content: center;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+        cursor: pointer;
         transition: all 0.3s;
-        background: transparent;
+        z-index: 1000;
+        animation: pulse-glow 2s infinite;
     }
     
-    .icon-btn:hover {
-        background: rgba(0,0,0,0.05);
-        transform: scale(1.1);
+    .floating-action:hover {
+        transform: scale(1.1) rotate(90deg);
+        box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
     }
     
-    [data-bs-theme="dark"] .icon-btn:hover {
-        background: rgba(255,255,255,0.1);
-    }
-    
-    .slide-up {
-        animation: slide-up 0.6s ease-out forwards;
-    }
-    
-    .loading-spinner {
-        width: 60px;
-        height: 60px;
-        border: 4px solid rgba(102, 126, 234, 0.2);
-        border-top-color: #667eea;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
     }
 </style>
 
-<div class="pt-3">
-    {{-- Header Section with Add Transaction Button --}}
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4 slide-up">
-        <div>
-            <h1 class="h2 fw-bold mb-2">
-                <span class="gradient-text">Dashboard Keuangan</span>
-            </h1>
-            <p class="text-muted mb-0 d-flex align-items-center gap-2">
-                <i class="bi bi-calendar-check"></i>
-                {{ now()->locale('id')->isoFormat('dddd, D MMMM Y') }}
-            </p>
-        </div>
-        <div class="d-flex gap-2 flex-wrap">
-            <a href="{{ route('app.transactions') }}" class="action-btn btn btn-primary" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
-                <i class="bi bi-plus-circle me-2"></i>Tambah Transaksi
-            </a>
-            <button class="action-btn btn btn-light border" onclick="window.location.reload()">
-                <i class="bi bi-arrow-clockwise me-2"></i>
-                Refresh
-            </button>
-            <div class="dropdown">
-                <button class="action-btn btn btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    <i class="bi bi-three-dots"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0">
-                    <li><a class="dropdown-item" href="#" onclick="window.print()"><i class="bi bi-printer me-2"></i>Cetak</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="exportData()"><i class="bi bi-download me-2"></i>Export</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    {{-- Welcome Banner --}}
-    <div class="welcome-banner p-4 mb-4 slide-up" style="animation-delay: 0.1s">
-        <div class="position-relative" style="z-index: 1;">
-            <div class="d-flex align-items-center gap-4">
-                <div class="d-none d-md-block">
-                    <div class="rounded-circle bg-white bg-opacity-20 p-2" 
-                         style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                        <div class="position-relative" style="width: 100%; height: 100%;">
-                            @php
-                                $name = $auth->name;
-                                $initials = collect(explode(' ', $name))->map(function($word) {
-                                    return strtoupper(substr($word, 0, 1));
-                                })->take(2)->join('');
-                                $colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5', '#9B59B6', '#3498DB'];
-                                $colorIndex = abs(crc32($name)) % count($colors);
-                                $bgColor = $colors[$colorIndex];
-                            @endphp
-                            
-                            <div class="rounded-circle w-100 h-100 d-flex align-items-center justify-content-center"
-                                 style="background: {{ $bgColor }}; font-size: 1.8rem; font-weight: 600; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
-                                {{ $initials }}
+<div class="dashboard-wrapper">
+    {{-- Hero Section --}}
+    <div class="hero-section" style="animation: float-up 0.5s ease-out;">
+        <div class="position-relative" style="z-index: 10;">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="d-flex align-items-center gap-4 mb-3">
+                        @php
+                            $name = $auth->name ?? 'User';
+                            $initials = collect(explode(' ', $name))->map(function($word) {
+                                return strtoupper(substr($word, 0, 1));
+                            })->take(2)->join('');
+                            $colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5', '#9B59B6', '#3498DB'];
+                            $colorIndex = abs(crc32($name)) % count($colors);
+                            $bgColor = $colors[$colorIndex];
+                        @endphp
+                        
+                        <div class="avatar-circle" style="background: {{ $bgColor }};">
+                            {{ $initials }}
+                        </div>
+                        
+                        <div class="text-white">
+                            <h1 class="display-5 fw-bold mb-2">Halo, {{ $auth->name ?? 'User' }}! 🚀</h1>
+                            <p class="fs-5 mb-0 opacity-90">{{ now()->locale('id')->isoFormat('dddd, D MMMM Y') }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-stats mt-4">
+                        <div class="quick-stat-item">
+                            <i class="bi bi-receipt"></i>
+                            <div class="text-white">
+                                <small class="d-block opacity-75">Transaksi</small>
+                                <strong class="fs-5">{{ number_format(array_sum($monthly['income'] ?? []), 0, ',', '.') }}</strong>
                             </div>
-                            <div class="position-absolute" style="bottom: -2px; right: -2px; background: #22c55e; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white;">
-                                <i class="bi bi-check-lg text-white" style="font-size: 0.8rem; margin-left: 2px;"></i>
+                        </div>
+                        <div class="quick-stat-item">
+                            <i class="bi bi-folder"></i>
+                            <div class="text-white">
+                                <small class="d-block opacity-75">Kategori</small>
+                                <strong class="fs-5">{{ count($distribution['labels'] ?? []) }}</strong>
+                            </div>
+                        </div>
+                        <div class="quick-stat-item">
+                            <i class="bi bi-calendar-week"></i>
+                            <div class="text-white">
+                                <small class="d-block opacity-75">Bulan Ini</small>
+                                <strong class="fs-5">{{ now()->format('M Y') }}</strong>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-white">
-                    <h3 class="fw-bold mb-2">Selamat datang, {{ $auth->name }}! 👋</h3>
-                    <p class="mb-3 opacity-90">Mari kelola keuangan Anda dengan lebih bijak</p>
-                    <div class="d-flex flex-wrap gap-3">
-                        <span class="metric-badge bg-white bg-opacity-20 text-white">
-                            <i class="bi bi-wallet2"></i>
-                            {{ number_format(array_sum($monthly['income'] ?? []), 0, ',', '.') }} transaksi
-                        </span>
-                        <span class="metric-badge bg-white bg-opacity-20 text-white">
-                            <i class="bi bi-tags"></i>
-                            {{ count($distribution['labels'] ?? []) }} kategori
-                        </span>
-                    </div>
+                
+                <div class="col-md-4 text-end d-none d-md-block">
+                    <a href="{{ route('app.transactions') }}" class="action-button" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Transaksi Baru
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Stats Cards --}}
+    {{-- Stats Cards Grid --}}
     <div class="row g-4 mb-4">
         {{-- Income Card --}}
-        <div class="col-sm-6 col-lg-3">
-            <div class="premium-card p-4 h-100 slide-up" style="animation-delay: 0.2s">
-                <div class="d-flex align-items-start justify-content-between mb-3">
-                    <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                        <i class="bi bi-arrow-up-circle-fill text-white fs-3"></i>
-                    </div>
-                    <div class="metric-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                        <i class="bi bi-graph-up-arrow"></i>
-                        11%
-                    </div>
+        <div class="col-md-6 col-lg-3" style="animation-delay: 0.1s;">
+            <div class="stat-card-modern">
+                <div class="icon-box" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <i class="bi bi-arrow-up-circle-fill"></i>
                 </div>
-                <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Pemasukan</p>
-                <h2 class="stats-number text-success mb-0">Rp {{ number_format(floatval(str_replace('.', '', $stats['income'])), 0, ',', '.') }}</h2>
-                <p class="text-muted small mt-2 mb-0">Bulan ini</p>
+                <div>
+                    <p class="text-muted text-uppercase small fw-semibold mb-2" style="letter-spacing: 1.5px;">Pemasukan</p>
+                    <div class="amount-display text-success">
+                        Rp {{ number_format(floatval(str_replace('.', '', $stats['income'])), 0, ',', '.') }}
+                    </div>
+                    <span class="trend-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                        <i class="bi bi-graph-up-arrow"></i>
+                        +15.3% bulan ini
+                    </span>
+                </div>
             </div>
         </div>
 
         {{-- Expense Card --}}
-        <div class="col-sm-6 col-lg-3">
-            <div class="premium-card p-4 h-100 slide-up" style="animation-delay: 0.3s">
-                <div class="d-flex align-items-start justify-content-between mb-3">
-                    <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
-                        <i class="bi bi-arrow-down-circle-fill text-white fs-3"></i>
-                    </div>
-                    <div class="metric-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                        <i class="bi bi-graph-down-arrow"></i>
-                        8%
-                    </div>
+        <div class="col-md-6 col-lg-3" style="animation-delay: 0.2s;">
+            <div class="stat-card-modern">
+                <div class="icon-box" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                    <i class="bi bi-arrow-down-circle-fill"></i>
                 </div>
-                <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Pengeluaran</p>
-                <h2 class="stats-number text-danger mb-0">Rp {{ number_format(floatval(str_replace('.', '', $stats['expense'])), 0, ',', '.') }}</h2>
-                <p class="text-muted small mt-2 mb-0">Bulan ini</p>
+                <div>
+                    <p class="text-muted text-uppercase small fw-semibold mb-2" style="letter-spacing: 1.5px;">Pengeluaran</p>
+                    <div class="amount-display text-danger">
+                        Rp {{ number_format(floatval(str_replace('.', '', $stats['expense'])), 0, ',', '.') }}
+                    </div>
+                    <span class="trend-badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                        <i class="bi bi-graph-down-arrow"></i>
+                        -8.7% bulan ini
+                    </span>
+                </div>
             </div>
         </div>
 
         {{-- Net Balance Card --}}
-        <div class="col-sm-6 col-lg-3">
-            <div class="premium-card p-4 h-100 slide-up" style="animation-delay: 0.4s">
-                <div class="d-flex align-items-start justify-content-between mb-3">
-                    <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
-                        <i class="bi bi-wallet2 text-white fs-3"></i>
-                    </div>
-                    <div class="metric-badge" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
-                        <i class="bi bi-check-circle"></i>
-                        100%
-                    </div>
+        <div class="col-md-6 col-lg-3" style="animation-delay: 0.3s;">
+            <div class="stat-card-modern">
+                <div class="icon-box" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                    <i class="bi bi-wallet2"></i>
                 </div>
-                <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Saldo Bersih</p>
-                <h2 class="stats-number text-primary mb-0">Rp {{ number_format(floatval(str_replace('.', '', $stats['net'])), 0, ',', '.') }}</h2>
-                <p class="text-muted small mt-2 mb-0">Periode ini</p>
+                <div>
+                    <p class="text-muted text-uppercase small fw-semibold mb-2" style="letter-spacing: 1.5px;">Saldo Bersih</p>
+                    <div class="amount-display text-primary">
+                        Rp {{ number_format(floatval(str_replace('.', '', $stats['net'])), 0, ',', '.') }}
+                    </div>
+                    <span class="trend-badge" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Periode ini
+                    </span>
+                </div>
             </div>
         </div>
 
         {{-- Total Balance Card --}}
-        <div class="col-sm-6 col-lg-3">
-            <div class="premium-card p-4 h-100 slide-up" style="animation-delay: 0.5s">
-                <div class="d-flex align-items-start justify-content-between mb-3">
-                    <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
-                        <i class="bi bi-piggy-bank-fill text-white fs-3"></i>
+        <div class="col-md-6 col-lg-3" style="animation-delay: 0.4s;">
+            <div class="stat-card-modern">
+                <div class="icon-box" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                    <i class="bi bi-piggy-bank-fill"></i>
+                </div>
+                <div>
+                    <p class="text-muted text-uppercase small fw-semibold mb-2" style="letter-spacing: 1.5px;">Total Saldo</p>
+                    <div class="amount-display" style="color: #8b5cf6;">
+                        Rp {{ number_format(floatval(str_replace('.', '', $stats['total'])), 0, ',', '.') }}
                     </div>
-                    <div class="metric-badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                    <span class="trend-badge" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">
                         <i class="bi bi-infinity"></i>
-                    </div>
+                        Akumulasi
+                    </span>
                 </div>
-                <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Total Saldo</p>
-                <h2 class="stats-number" style="color: #8b5cf6;">Rp {{ number_format(floatval(str_replace('.', '', $stats['total'])), 0, ',', '.') }}</h2>
-                <p class="text-muted small mt-2 mb-0">Akumulasi</p>
             </div>
         </div>
     </div>
 
-    {{-- Chart Toolbar --}}
-    <div class="chart-toolbar mb-3 slide-up" style="animation-delay: 0.6s">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="d-flex gap-2">
-                <button class="period-btn active" data-period="6">6 Bulan</button>
-                <button class="period-btn" data-period="12">1 Tahun</button>
-                <button class="period-btn" data-period="all">Semua</button>
+    {{-- Chart Section --}}
+    <div class="chart-container-modern mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+            <div>
+                <h3 class="fw-bold mb-1">📊 Analisis Keuangan</h3>
+                <p class="text-muted mb-0">Visualisasi tren pemasukan & pengeluaran</p>
             </div>
-            <div class="d-flex gap-2">
-                <button class="icon-btn" onclick="toggleChartType('line')" title="Line Chart">
-                    <i class="bi bi-graph-up"></i>
-                </button>
-                <button class="icon-btn" onclick="toggleChartType('bar')" title="Bar Chart">
-                    <i class="bi bi-bar-chart-fill"></i>
-                </button>
-                <button class="icon-btn" onclick="toggleChartType('area')" title="Area Chart">
-                    <i class="bi bi-activity"></i>
-                </button>
-                <button class="icon-btn" onclick="downloadChart()" title="Download">
-                    <i class="bi bi-download"></i>
-                </button>
+            
+            <div class="period-selector">
+                <button class="active" data-period="6">6 Bulan</button>
+                <button data-period="12">1 Tahun</button>
+                <button data-period="all">Semua</button>
             </div>
         </div>
-    </div>
 
-    {{-- Charts Section --}}
-    <div class="row g-4">
-        {{-- Trend Chart --}}
-        <div class="col-12">
-            <div class="chart-card p-4 slide-up" style="animation-delay: 0.7s">
-                <div class="d-flex justify-content-between align-items-start mb-4">
-                    <div>
-                        <h5 class="fw-bold mb-1">Tren Keuangan</h5>
-                        <p class="text-muted small mb-0">Perbandingan pemasukan & pengeluaran</p>
-                    </div>
-                    <div class="d-flex gap-3">
-                        <div class="d-flex align-items-center gap-2">
-                            <div style="width: 12px; height: 12px; border-radius: 3px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                            <small class="text-muted">Pemasukan</small>
-                        </div>
-                        <div class="d-flex align-items-center gap-2">
-                            <div style="width: 12px; height: 12px; border-radius: 3px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                            <small class="text-muted">Pengeluaran</small>
-                        </div>
-                    </div>
-                </div>
-                <div id="trend-chart" style="height: 350px;"></div>
+        <div class="d-flex gap-4 mb-4 flex-wrap">
+            <div class="d-flex align-items-center gap-2">
+                <div style="width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                <span class="fw-semibold">Pemasukan</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <div style="width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                <span class="fw-semibold">Pengeluaran</span>
             </div>
         </div>
+        
+        <div id="trend-chart" style="height: 400px;"></div>
     </div>
 
     {{-- Recent Transactions --}}
-    <div class="row g-4 mt-2">
-        <div class="col-12">
-            <div class="premium-card p-4 slide-up" style="animation-delay: 0.9s;">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h5 class="fw-bold mb-1">Transaksi Terbaru</h5>
-                        <p class="text-muted small mb-0">{{ count($transactions) }} transaksi terakhir</p>
-                    </div>
-                    <a href="{{ route('app.transactions') }}" class="btn btn-link text-decoration-none">
-                        Lihat Semua <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Deskripsi</th>
-                                <th>Tipe</th>
-                                <th class="text-end">Jumlah</th>
-                                <th class="text-center">Bukti</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($transactions as $transaction)
-                                <tr>
-                                    <td>{{ $transaction->transaction_date->format('d M Y') }}</td>
-                                    <td>{{ Str::limit(strip_tags($transaction->description), 50) }}</td>
-                                    <td>
-                                        <span class="badge {{ $transaction->type === 'income' ? 'text-bg-success' : 'text-bg-danger' }}">
-                                            {{ $transaction->type === 'income' ? 'Pemasukan' : 'Pengeluaran' }}
-                                        </span>
-                                    </td>
-                                    <td class="text-end">Rp {{ number_format($transaction->amount, 0, ',', '.') }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('app.transactions', ['action' => 'detail', 'id' => $transaction->id]) }}"
-                                           class="btn btn-sm btn-outline-primary">
-                                            @if($transaction->receipt_image_path)
-                                                <i class="bi bi-file-earmark-image"></i>
-                                            @else
-                                                <i class="bi bi-eye"></i>
-                                            @endif
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center text-muted py-3">
-                                        Belum ada transaksi
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+    <div class="chart-container-modern">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold mb-1">🕐 Transaksi Terbaru</h3>
+                <p class="text-muted mb-0">{{ count($transactions) }} transaksi terakhir</p>
             </div>
+            <a href="{{ route('app.transactions') }}" class="action-button" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 10px 24px; font-size: 0.875rem;">
+                Lihat Semua <i class="bi bi-arrow-right ms-2"></i>
+            </a>
         </div>
-    </div>
 
-    {{-- Transaction Detail Modal --}}
-    <div class="modal fade" id="detailTransactionModal" tabindex="-1" wire:ignore.self>
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title">Detail Transaksi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    @if($detailTransaction)
-                        <div class="row g-4">
-                            {{-- Transaction Info --}}
-                            <div class="col-md-7">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <span class="badge {{ $detailTransaction->type === 'income' ? 'text-bg-success' : 'text-bg-danger' }} px-3 py-2">
-                                        {{ $detailTransaction->type === 'income' ? 'Pemasukan' : 'Pengeluaran' }}
-                                    </span>
-                                    <span class="text-muted">·</span>
-                                    <span class="text-muted">
-                                        {{ $detailTransaction->transaction_date->format('d M Y') }}
-                                    </span>
-                                </div>
-                                
-                                <h4 class="mb-3">
-                                    Rp {{ number_format($detailTransaction->amount, 0, ',', '.') }}
-                                </h4>
-                                
-                                <div class="mb-4">
-                                    <h6 class="text-muted mb-2">Deskripsi:</h6>
-                                    <div class="border rounded p-3 bg-light">
-                                        {!! $detailTransaction->description !!}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Receipt Image --}}
-                            <div class="col-md-5">
-                                @if($detailTransaction->receipt_image_path)
-                                    <div class="text-center">
-                                        <h6 class="text-muted mb-3">Bukti Transaksi:</h6>
-                                        <img src="{{ Storage::disk('public')->url($detailTransaction->receipt_image_path) }}" 
-                                             class="img-fluid rounded shadow-sm" 
-                                             style="max-height: 300px"
-                                             alt="Bukti transaksi">
-                                        <div class="mt-3">
-                                            <a href="{{ Storage::disk('public')->url($detailTransaction->receipt_image_path) }}" 
-                                               target="_blank" 
-                                               class="btn btn-sm btn-outline-primary">
-                                                <i class="bi bi-download me-1"></i> Download
-                                            </a>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="text-center text-muted py-5">
-                                        <i class="bi bi-image fs-1"></i>
-                                        <p class="mt-2">Tidak ada bukti transaksi</p>
-                                    </div>
-                                @endif
+        <div class="transactions-list">
+            @forelse($transactions as $transaction)
+                <div class="transaction-row">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-calendar3 text-muted"></i>
+                                <span class="fw-semibold">{{ $transaction->transaction_date->format('d M Y') }}</span>
                             </div>
                         </div>
-                    @endif
+                        <div class="col-md-4">
+                            <p class="mb-0 fw-medium">{{ Str::limit(strip_tags($transaction->description), 50) }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="badge px-3 py-2 {{ $transaction->type === 'income' ? 'text-bg-success' : 'text-bg-danger' }}">
+                                {{ $transaction->type === 'income' ? '💰 Pemasukan' : '💸 Pengeluaran' }}
+                            </span>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <span class="fs-5 fw-bold {{ $transaction->type === 'income' ? 'text-success' : 'text-danger' }}">
+                                Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                            </span>
+                        </div>
+                        <div class="col-md-1 text-end">
+                            <a href="{{ route('app.transactions', ['action' => 'detail', 'id' => $transaction->id]) }}"
+                               class="btn btn-sm btn-outline-primary rounded-pill">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @empty
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox fs-1 text-muted"></i>
+                    <p class="text-muted mt-3">Belum ada transaksi</p>
+                </div>
+            @endforelse
         </div>
     </div>
 
-    {{-- End of content --}}
-
-    {{-- ApexCharts --}}
-    <script>
-        (function() {
-            let trendChart = null;
-            let donutChart = null;
-            let currentType = 'line';
-            
-            function waitForApexCharts(callback) {
-                if (typeof ApexCharts !== 'undefined') {
-                    callback();
-                } else {
-                    setTimeout(() => waitForApexCharts(callback), 100);
-                }
-            }
-            
-            function initCharts() {
-                const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-                
-                // Trend Chart Options
-                const trendOptions = {
-                    series: [{
-                        name: 'Pemasukan',
-                        data: {!! json_encode($monthly['income'] ?? [1000, 1200, 1500, 1300, 1800, 2000]) !!}
-                    }, {
-                        name: 'Pengeluaran',
-                        data: {!! json_encode($monthly['expense'] ?? [800, 900, 1000, 1100, 1200, 1300]) !!}
-                    }],
-                    chart: {
-                        type: currentType,
-                        height: 350,
-                        toolbar: { show: false },
-                        background: 'transparent',
-                        animations: {
-                            enabled: true,
-                            easing: 'easeinout',
-                            speed: 800
-                        }
-                    },
-                    colors: ['#667eea', '#f5576c'],
-                    stroke: { curve: 'smooth', width: 3 },
-                    fill: {
-                        type: 'gradient',
-                        gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.7,
-                            opacityTo: 0.2
-                        }
-                    },
-                    dataLabels: { enabled: false },
-                    markers: { size: 5 },
-                    xaxis: {
-                        categories: {!! json_encode($monthly['months'] ?? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']) !!},
-                        labels: { style: { colors: isDark ? '#9ca3af' : '#6b7280' } }
-                    },
-                    yaxis: {
-                        labels: {
-                            style: { colors: isDark ? '#9ca3af' : '#6b7280' },
-                            formatter: val => 'Rp ' + val.toLocaleString('id-ID')
-                        }
-                    },
-                    grid: {
-                        borderColor: isDark ? '#374151' : '#e5e7eb',
-                        strokeDashArray: 4
-                    },
-                    tooltip: {
-                        theme: isDark ? 'dark' : 'light',
-                        y: { formatter: val => 'Rp ' + val.toLocaleString('id-ID') }
-                    }
-                };
-
-                // Render trend chart
-                const trendEl = document.getElementById('trend-chart');
-                
-                if (trendEl && !trendChart) {
-                    trendChart = new ApexCharts(trendEl, trendOptions);
-                    trendChart.render();
-                }
-            }
-
-            window.toggleChartType = function(type) {
-                if (!trendChart || currentType === type) return;
-                currentType = type;
-                trendChart.updateOptions({ chart: { type: type } });
-            };
-
-            window.downloadChart = function() {
-                if (trendChart) {
-                    trendChart.dataURI().then(({ imgURI }) => {
-                        const link = document.createElement('a');
-                        link.href = imgURI;
-                        link.download = 'chart.png';
-                        link.click();
-                    });
-                }
-            };
-
-            window.exportData = function() {
-                alert('Export feature coming soon!');
-            };
-
-            // Initialize when DOM is ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    waitForApexCharts(initCharts);
-                });
-            } else {
-                waitForApexCharts(initCharts);
-            }
-
-            // Period buttons
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('period-btn')) {
-                    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                }
-            });
-        })();
-    </script>
+    {{-- Floating Action Button --}}
+    <a href="{{ route('app.transactions') }}" class="floating-action">
+        <i class="bi bi-plus"></i>
+    </a>
 </div>
+
+{{-- Scripts --}}
+<script>
+    (function() {
+        let trendChart = null;
+        
+        function waitForApexCharts(callback) {
+            if (typeof ApexCharts !== 'undefined') {
+                callback();
+            } else {
+                setTimeout(() => waitForApexCharts(callback), 100);
+            }
+        }
+        
+        function initCharts() {
+            const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+            
+            const trendOptions = {
+                series: [{
+                    name: 'Pemasukan',
+                    data: {!! json_encode($monthly['income'] ?? [1000, 1200, 1500, 1300, 1800, 2000]) !!}
+                }, {
+                    name: 'Pengeluaran',
+                    data: {!! json_encode($monthly['expense'] ?? [800, 900, 1000, 1100, 1200, 1300]) !!}
+                }],
+                chart: {
+                    type: 'area',
+                    height: 400,
+                    toolbar: { show: false },
+                    background: 'transparent',
+                    animations: {
+                        enabled: true,
+                        easing: 'easeinout',
+                        speed: 800
+                    }
+                },
+                colors: ['#667eea', '#f5576c'],
+                stroke: { 
+                    curve: 'smooth', 
+                    width: 4 
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.5,
+                        opacityTo: 0.1,
+                        stops: [0, 90, 100]
+                    }
+                },
+                dataLabels: { enabled: false },
+                markers: { 
+                    size: 6,
+                    strokeWidth: 3,
+                    strokeColors: '#fff',
+                    hover: { size: 8 }
+                },
+                xaxis: {
+                    categories: {!! json_encode($monthly['months'] ?? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']) !!},
+                    labels: { 
+                        style: { 
+                            colors: isDark ? '#9ca3af' : '#6b7280',
+                            fontSize: '12px',
+                            fontWeight: 600
+                        } 
+                    }
+                },
+                yaxis: {
+                    labels: {
+                        style: { 
+                            colors: isDark ? '#9ca3af' : '#6b7280',
+                            fontSize: '12px',
+                            fontWeight: 600
+                        },
+                        formatter: val => 'Rp ' + val.toLocaleString('id-ID')
+                    }
+                },
+                grid: {
+                    borderColor: isDark ? '#374151' : '#e5e7eb',
+                    strokeDashArray: 4,
+                    padding: {
+                        top: 0,
+                        right: 10,
+                        bottom: 0,
+                        left: 10
+                    }
+                },
+                tooltip: {
+                    theme: isDark ? 'dark' : 'light',
+                    y: { 
+                        formatter: val => 'Rp ' + val.toLocaleString('id-ID') 
+                    },
+                    style: {
+                        fontSize: '14px'
+                    }
+                },
+                legend: {
+                    show: false
+                }
+            };
+
+            const trendEl = document.getElementById('trend-chart');
+            
+            if (trendEl && !trendChart) {
+                trendChart = new ApexCharts(trendEl, trendOptions);
+                trendChart.render();
+            }
+        }
+
+        // Initialize
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                waitForApexCharts(initCharts);
+            });
+        } else {
+            waitForApexCharts(initCharts);
+        }
+
+        // Period buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.period-selector button')) {
+                const btn = e.target.closest('.period-selector button');
+                document.querySelectorAll('.period-selector button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        });
+    })();
+</script>
