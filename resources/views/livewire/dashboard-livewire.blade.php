@@ -382,7 +382,7 @@
                         </div>
                         
                         <div class="text-white">
-                            <h1 class="display-5 fw-bold mb-2">Halo, {{ $auth->name ?? 'User' }}! 🚀</h1>
+                            <h1 class="display-5 fw-bold mb-2">Halo, {{ $auth->name ?? 'User' }}! </h1>
                             <p class="fs-5 mb-0 opacity-90">{{ now()->locale('id')->isoFormat('dddd, D MMMM Y') }}</p>
                         </div>
                     </div>
@@ -437,7 +437,7 @@
                     </div>
                     <span class="trend-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
                         <i class="bi bi-graph-up-arrow"></i>
-                        +15.3% bulan ini
+                        bulan ini
                     </span>
                 </div>
             </div>
@@ -456,7 +456,7 @@
                     </div>
                     <span class="trend-badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
                         <i class="bi bi-graph-down-arrow"></i>
-                        -8.7% bulan ini
+                        bulan ini
                     </span>
                 </div>
             </div>
