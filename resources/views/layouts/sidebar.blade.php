@@ -40,12 +40,6 @@
             <a href="{{ route('app.transactions') }}" class="{{ request()->routeIs('app.transactions') ? 'active' : '' }}">
                 <i class="bi bi-arrow-left-right"></i>
                 <span>Transaksi</span>
-                @php
-                    $transactionCount = \App\Models\Transaction::count();
-                @endphp
-                @if($transactionCount > 0)
-                    <span class="badge bg-primary rounded-pill ms-auto">{{ $transactionCount }}</span>
-                @endif
             </a>
         </li>
 
