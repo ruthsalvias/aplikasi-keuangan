@@ -323,7 +323,7 @@
                     </div>
                 </div>
                 <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Pemasukan</p>
-                <h2 class="stats-number text-success mb-0">Rp {{ $stats['income'] }}</h2>
+                <h2 class="stats-number text-success mb-0">Rp {{ number_format(floatval(str_replace('.', '', $stats['income'])), 0, ',', '.') }}</h2>
                 <p class="text-muted small mt-2 mb-0">Bulan ini</p>
             </div>
         </div>
@@ -341,7 +341,7 @@
                     </div>
                 </div>
                 <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Pengeluaran</p>
-                <h2 class="stats-number text-danger mb-0">Rp {{ $stats['expense'] }}</h2>
+                <h2 class="stats-number text-danger mb-0">Rp {{ number_format(floatval(str_replace('.', '', $stats['expense'])), 0, ',', '.') }}</h2>
                 <p class="text-muted small mt-2 mb-0">Bulan ini</p>
             </div>
         </div>
@@ -359,7 +359,7 @@
                     </div>
                 </div>
                 <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Saldo Bersih</p>
-                <h2 class="stats-number text-primary mb-0">Rp {{ $stats['net'] }}</h2>
+                <h2 class="stats-number text-primary mb-0">Rp {{ number_format(floatval(str_replace('.', '', $stats['net'])), 0, ',', '.') }}</h2>
                 <p class="text-muted small mt-2 mb-0">Periode ini</p>
             </div>
         </div>
@@ -376,7 +376,7 @@
                     </div>
                 </div>
                 <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.5px;">Total Saldo</p>
-                <h2 class="stats-number" style="color: #8b5cf6;">Rp {{ $stats['total'] }}</h2>
+                <h2 class="stats-number" style="color: #8b5cf6;">Rp {{ number_format(floatval(str_replace('.', '', $stats['total'])), 0, ',', '.') }}</h2>
                 <p class="text-muted small mt-2 mb-0">Akumulasi</p>
             </div>
         </div>
