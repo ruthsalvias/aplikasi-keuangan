@@ -433,7 +433,7 @@
                 <div>
                     <p class="text-muted text-uppercase small fw-semibold mb-2" style="letter-spacing: 1.5px;">Pemasukan</p>
                     <div class="amount-display text-success">
-                        Rp {{ number_format(floatval(str_replace('.', '', $stats['income'])), 0, ',', '.') }}
+                       Rp {{ number_format($stats['income'], 0, ',', '.') }}
                     </div>
                     <span class="trend-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
                         <i class="bi bi-graph-up-arrow"></i>
